@@ -4,15 +4,15 @@ This Python package contains the interfaces for interacting with the Stromer web
 
 Installation:
 
-    `pip install stromer_api`
+    pip install stromer_api
 
 Usage:
 
-    `from stromer_api import StromerBike`
-    `mybike = StromerBike(<your username>, <your password>, <stromer client id>)`
+    from stromer_api import StromerBike
+    mybike = StromerBike(<your username>, <your password>, <stromer client id>)
 
-    `print(mybike.state.trip_distance)`
-    `print(mybike.position.latitude)`
+    print(mybike.state.trip_distance)
+    print(mybike.position.latitude)
 
 The client_id you should intercept using a proxy (eg. mitm proxy) or maybe it can be obtained from decompiling the android apk of the Stromer OMNI app. Many discussions can be found on the internet how to get hold of it.
 
