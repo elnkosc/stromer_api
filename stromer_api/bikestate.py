@@ -1,9 +1,17 @@
-from .general import item, time_str, datetime_str, BikeData
+from .general import time_str, datetime_str, item
+from .portal import Portal
+from .bikedata import BikeDataFromPortal
 
 
-class BikeState(BikeData):
-    def __init__(self, data: dict) -> None:
-        super().__init__(data)
+class BikeState(BikeDataFromPortal):
+    def __init__(self, portal: Portal, bike_id: int, cached: bool = False) -> None:
+        super().__init__(portal=portal)
+        self.__endpoint = "bike/%s/state" % bike_id
+        if cached:
+            self.__params = {"cached": "true"}
+        else:
+            self.__params = {"cached": "false"}
+        self._data = self._portal.get(self.__endpoint, self.__params)
 
     @property
     def trip_distance(self) -> float:

@@ -1,7 +1,9 @@
-from .general import item, BikeData
+from .general import item
+from .portal import Portal
+from .bikedata import BikeDataFromDict, BikeDataFromPortal
 
 
-class BikeShop(BikeData):
+class BikeShop(BikeDataFromDict):
     def __init__(self, data: dict) -> None:
         super().__init__(data)
 
@@ -44,3 +46,22 @@ class BikeShop(BikeData):
     @property
     def street(self) -> str:
         return item(self._data, "street")
+
+
+class BikeShopList(BikeDataFromPortal):
+    def __init__(self, portal: Portal) -> None:
+        super().__init__(portal=portal)
+        self.__endpoint = "shops"
+        self._data = []
+        shops = self._portal.get(self.__endpoint, full_list=True)
+        for shop in shops:
+            self._data.append(BikeShop(shop))
+
+    def __getitem__(self, i: int) -> BikeShop:
+        return self._data[i]
+
+    def lookup(self, shop_name: str) -> BikeShop | None:
+        for shop in self._data:
+            if shop_name.lower() in shop.name.lower():
+                return shop
+        return None

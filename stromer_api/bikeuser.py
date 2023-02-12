@@ -1,10 +1,14 @@
-from .general import item, BikeData
+from .general import item
+from .portal import Portal
 from .bikeshop import BikeShop
+from .bikedata import BikeDataFromPortal
 
 
-class BikeUser(BikeData):
-    def __init__(self, data: dict) -> None:
-        super().__init__(data)
+class BikeUser(BikeDataFromPortal):
+    def __init__(self, portal: Portal) -> None:
+        super().__init__(portal=portal)
+        self.__endpoint = "user"
+        self._data = self._portal.get(self.__endpoint)
 
     @property
     def accepted_gdpr_version(self) -> str:

@@ -1,9 +1,13 @@
-from .general import item, time_str, BikeData
+from .general import item, time_str
+from .portal import Portal
+from .bikedata import BikeDataFromPortal
 
 
-class BikeStatistics(BikeData):
-    def __init__(self, data: dict) -> None:
-        super().__init__(data)
+class BikeStatistics(BikeDataFromPortal):
+    def __init__(self, portal: Portal) -> None:
+        super().__init__(portal=portal)
+        self.__endpoint = "bike/statistics/all"
+        self._data = self._portal.get(self.__endpoint)
 
     @property
     def total_km(self) -> float:

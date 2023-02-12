@@ -1,7 +1,8 @@
-from .general import item, BikeData
+from .general import item
+from .bikedata import BikeDataFromDict
 
 
-class PeriodicInfo(BikeData):
+class PeriodicInfo(BikeDataFromDict):
     def __init__(self, data: dict) -> None:
         super().__init__(data)
 
