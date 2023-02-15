@@ -64,7 +64,7 @@ class Portal:
         except:
             raise Exception("Error setting parameters")
 
-    def post(self, endpoint: str, data: dict) -> dict | None:
+    def post(self, endpoint: str, data: dict):
         try:
             res = self.__session.post(self.__api_url + endpoint + "/",
                                       headers={"Authorization": "Bearer %s" % self.__access_token},
@@ -76,7 +76,7 @@ class Portal:
         except:
             raise Exception("Error setting parameters")
 
-    def get(self, endpoint: str, params=None, full_list: bool = False) -> dict | list | None:
+    def get(self, endpoint: str, params=None, full_list: bool = False):
         try:
             if params is None:
                 params = {}

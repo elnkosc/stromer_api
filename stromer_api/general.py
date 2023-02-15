@@ -10,14 +10,14 @@ def item(dictionary: dict, key_name: str, default_value: object = None):
         return default_value
 
 
-def time_str(seconds: int) -> str | None:
+def time_str(seconds: int):
     if seconds is None:
         return None
     else:
         return str(datetime.timedelta(seconds=seconds))
 
 
-def datetime_str(timestamp: int) -> str | None:
+def datetime_str(timestamp: int):
     if timestamp is None:
         return None
     else:
