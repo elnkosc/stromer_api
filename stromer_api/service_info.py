@@ -27,7 +27,7 @@ class ServiceInfo(BikeDataFromPortal):
         return item(self._data, "serial")
 
     @property
-    def service_logs(self) -> list[ServiceLog]:
+    def service_logs(self) -> list:
         if self._service_logs is None:
             self._service_logs = []
             for log in item(self._data, "servicelogs"):
@@ -35,7 +35,7 @@ class ServiceInfo(BikeDataFromPortal):
         return self._service_logs
 
     @property
-    def bike_parts(self) -> list[BikePart]:
+    def bike_parts(self) -> list:
         if self._bike_parts is None:
             self._bike_parts = []
             for part in item(self._data, "bikeparts"):
