@@ -60,7 +60,7 @@ class BikeShopList(BikeDataFromPortal):
     def __getitem__(self, i: int) -> BikeShop:
         return self._data[i]
 
-    def lookup(self, shop_name: str) -> BikeShop | None:
+    def lookup(self, shop_name: str):
         for shop in self._data:
             if shop_name.lower() in shop.name.lower():
                 return shop
