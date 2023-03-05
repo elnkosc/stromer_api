@@ -7,6 +7,7 @@ import datetime
 
 class WeekStats(BikeDataFromPortal, PeriodStats):
     def __init__(self, portal: Portal, year: int, week: int, num_weeks: int = 1) -> None:
+        # sourcery skip: raise-specific-error
         BikeDataFromPortal.__init__(self, portal)
         self.__statistics_endpoint = "bike/statistics"
         self.__extra_data_endpoint = "bike/statistics/extra_data"
@@ -44,7 +45,7 @@ class WeekStats(BikeDataFromPortal, PeriodStats):
 
             # week_end_day cannot be in the future
             week_last_day = datetime.datetime.strptime(week_info["start"], "%Y%m%d") + datetime.timedelta(days=6)
-            if week_last_day > datetime.datetime.today():
+            if week_last_day > datetime.datetime.now():
                 week_end_day = stop
             else:
                 week_end_day = week_last_day.strftime("%Y%m%d")

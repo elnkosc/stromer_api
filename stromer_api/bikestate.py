@@ -6,11 +6,8 @@ from .bikedata import BikeDataFromPortal
 class BikeState(BikeDataFromPortal):
     def __init__(self, portal: Portal, bike_id: int, cached: bool = False) -> None:
         super().__init__(portal=portal)
-        self.__endpoint = "bike/%s/state" % bike_id
-        if cached:
-            self.__params = {"cached": "true"}
-        else:
-            self.__params = {"cached": "false"}
+        self.__endpoint = f"bike/{bike_id}/state"
+        self.__params = {"cached": "true"} if cached else {"cached": "false"}
         self._data = self._portal.get(self.__endpoint, self.__params)
 
     @property

@@ -7,7 +7,7 @@ class BikeSensors(BikeDataFromPortal):
     def __init__(self, portal: Portal, bike_id: int) -> None:
         super().__init__(portal=portal)
         self.__params = {"fields": "recup_level_user_offset,user_torque_sensitivity"}
-        self.__endpoint = "bike/%s/settings" % bike_id
+        self.__endpoint = f"bike/{bike_id}/settings"
         self._data = self._portal.get(self.__endpoint, self.__params)
 
     @property
@@ -19,16 +19,8 @@ class BikeSensors(BikeDataFromPortal):
         return item(self._data, "recup_level_user_offset")
 
     def set(self, recup: int = None, torque: int = None) -> None:
-        if recup is None:
-            recup = self.recup_level_user_offset
-        else:
-            recup = recup
-
-        if torque is None:
-            torque = self.user_torque_sensitivity
-        else:
-            torque = torque
-
+        recup = self.recup_level_user_offset if recup is None else recup
+        torque = self.user_torque_sensitivity if torque is None else torque
         data = {"recup_level_user_offset": recup,
                 "user_torque_sensitivity": torque}
         new_data = self._portal.post(self.__endpoint, data)

@@ -8,6 +8,7 @@ class Portal:
     __api_url = "https://api3.stromer-portal.ch/rapi/mobile/v4.1/"
 
     def __init__(self, username: str, password: str, client_id: str) -> None:
+        # sourcery skip: raise-specific-error
         self.__username = username
         self.__password = password
         self.__client_id = client_id
@@ -30,7 +31,7 @@ class Portal:
                 "password": self.__password,
                 "username": self.__username,
                 "csrfmiddlewaretoken": self.__session.cookies.get("csrftoken"),
-                "next": "/mobile/v4/o/authorize/?" + qs
+                "next": f"/mobile/v4/o/authorize/?{qs}",
             }
 
             res = self.__session.post(self.__url, data=data, headers={"Referer": self.__url}, allow_redirects=False)
@@ -54,46 +55,46 @@ class Portal:
             raise Exception("Authentication failed")
 
     def delete(self, endpoint: str) -> bool:
+        # sourcery skip: raise-specific-error
         try:
-            res = self.__session.delete(self.__api_url + endpoint + "/",
-                                        headers={"Authorization": "Bearer %s" % self.__access_token})
-            if res.status_code == 204:
-                return True
-            else:
-                return False
+            res = self.__session.delete(
+                self.__api_url + endpoint + "/",
+                headers={"Authorization": f"Bearer {self.__access_token}"},
+            )
+            return res.status_code == 204
         except:
             raise Exception("Error setting parameters")
 
     def post(self, endpoint: str, data: dict):
+        # sourcery skip: raise-specific-error
         try:
-            res = self.__session.post(self.__api_url + endpoint + "/",
-                                      headers={"Authorization": "Bearer %s" % self.__access_token},
-                                      json=data)
-            if "data" in res.json():
-                return res.json()["data"]
-            else:
-                return None
+            res = self.__session.post(
+                self.__api_url + endpoint + "/",
+                headers={"Authorization": f"Bearer {self.__access_token}"},
+                json=data,
+            )
+            return res.json()["data"] if "data" in res.json() else None
         except:
             raise Exception("Error setting parameters")
 
     def get(self, endpoint: str, params=None, full_list: bool = False):
+        # sourcery skip: raise-specific-error
         try:
             if params is None:
                 params = {}
 
-            res = self.__session.get(self.__api_url + endpoint,
-                                     headers={"Authorization": "Bearer %s" % self.__access_token},
-                                     params=params)
+            res = self.__session.get(
+                self.__api_url + endpoint,
+                headers={"Authorization": f"Bearer {self.__access_token}"},
+                params=params,
+            )
             if "data" not in res.json():
                 return None
             elif isinstance(res.json()["data"], list):
                 if full_list:
                     return res.json()["data"]
                 else:
-                    if len(res.json()["data"]) > 0:
-                        return res.json()["data"][0]
-                    else:
-                        return None
+                    return res.json()["data"][0] if len(res.json()["data"]) > 0 else None
             else:
                 return res.json()["data"]
 

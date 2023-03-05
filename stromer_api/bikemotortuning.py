@@ -7,7 +7,7 @@ class BikeMotorTuning(BikeDataFromPortal):
     def __init__(self, portal: Portal, bike_id: int) -> None:
         super().__init__(portal=portal)
         self.__params = {"fields": "tuning_speed,tuning_torque,tuning_agility"}
-        self.__endpoint = "bike/%s/settings" % bike_id
+        self.__endpoint = f"bike/{bike_id}/settings"
         self._data = self._portal.get(self.__endpoint, self.__params)
 
     @property
@@ -23,21 +23,9 @@ class BikeMotorTuning(BikeDataFromPortal):
         return item(self._data, "tuning_agility")
 
     def set(self, speed: int = None, torque: int = None, agility: int = None) -> None:
-        if speed is None:
-            speed = self.tuning_speed
-        else:
-            speed = speed
-
-        if torque is None:
-            torque = self.tuning_speed
-        else:
-            torque = torque
-
-        if agility is None:
-            agility = self.tuning_agility
-        else:
-            agility = agility
-
+        speed = self.tuning_speed if speed is None else speed
+        torque = self.tuning_speed if torque is None else torque
+        agility = self.tuning_agility if agility is None else agility
         data = {"tuning_speed": speed,
                 "tuning_torque": torque,
                 "tuning_agility": agility}

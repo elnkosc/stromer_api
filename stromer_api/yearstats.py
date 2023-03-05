@@ -7,6 +7,7 @@ import datetime
 
 class YearStats(BikeDataFromPortal, PeriodStats):
     def __init__(self, portal: Portal, year: int, num_years: int = 1) -> None:
+        # sourcery skip: raise-specific-error
         BikeDataFromPortal.__init__(self, portal)
         self.__statistics_endpoint = "bike/statistics"
         self.__extra_data_endpoint = "bike/statistics/extra_data"

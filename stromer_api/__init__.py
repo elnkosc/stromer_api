@@ -167,11 +167,11 @@ class StromerBike:
         return self.__year_stats
 
     def reset_trip_data(self) -> bool:
-        return self.__portal.delete("bike/id/%s/trip_data" % self.bikeid)
+        return self.__portal.delete(f"bike/id/{self.bikeid}/trip_data")
 
     def lock(self) -> bool:
         data = {"lock": True}
-        new_data = self.__portal.post("bike/%s/settings" % self.bikeid, data)
+        new_data = self.__portal.post(f"bike/{self.bikeid}/settings", data)
         if new_data is not None:
             self.__state = None
             return True
@@ -179,7 +179,7 @@ class StromerBike:
 
     def unlock(self) -> bool:
         data = {"lock": False}
-        new_data = self.__portal.post("bike/%s/settings" % self.bikeid, data)
+        new_data = self.__portal.post(f"bike/{self.bikeid}/settings", data)
         if new_data is not None:
             self.__state = None
             return True
@@ -189,7 +189,7 @@ class StromerBike:
         if mode.lower() not in ["on", "off", "flash"]:
             return False
         data = {"mode": mode.lower()}
-        new_data = self.__portal.post("bike/%s/light" % self.bikeid, data)
+        new_data = self.__portal.post(f"bike/{self.bikeid}/light", data)
         if new_data is not None:
             self.__state = None
             return True

@@ -37,7 +37,7 @@ class PeriodStats:
     def add_line(self, *args):
         data = tuple(args)
         self.__line_number += 1
-        self.__worksheet.write_row("A" + str(self.__line_number), data)
+        self.__worksheet.write_row(f"A{self.__line_number}", data)
 
     def close_worksheet(self):
         self.__worksheet.autofit()

@@ -8,7 +8,7 @@ class BikeSettings(BikeDataFromPortal):
         super().__init__(portal=portal)
         self.__params = {"fields": "auto_lock_mode,auto_power_off_time,date_format,"
                                    "distance_unit,language,speed_unit,clock_format"}
-        self.__endpoint = "bike/%s/settings" % bike_id
+        self.__endpoint = f"bike/{bike_id}/settings"
         self._data = self._portal.get(self.__endpoint, self.__params)
 
     @property

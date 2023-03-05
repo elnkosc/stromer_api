@@ -54,14 +54,17 @@ class BikeShopList(BikeDataFromPortal):
         self.__endpoint = "shops"
         self._data = []
         shops = self._portal.get(self.__endpoint, full_list=True)
-        for shop in shops:
-            self._data.append(BikeShop(shop))
+        self._data.extend(BikeShop(shop) for shop in shops)
 
     def __getitem__(self, i: int) -> BikeShop:
         return self._data[i]
 
     def lookup(self, shop_name: str):
-        for shop in self._data:
-            if shop_name.lower() in shop.name.lower():
-                return shop
-        return None
+        return next(
+            (
+                shop
+                for shop in self._data
+                if shop_name.lower() in shop.name.lower()
+            ),
+            None,
+        )
