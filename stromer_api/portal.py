@@ -40,14 +40,14 @@ class Portal:
             _, qs = splitquery(res.headers["Location"])
             query = parse_qs(qs)
             code = query["code"][0]
-            params = {
+            data = {
                 "grant_type": "authorization_code",
                 "client_id": self.__client_id,
                 "code": code,
                 "redirect_uri": "stromer://auth"
             }
 
-            res = requests.post(self.__token_url, params=params)
+            res = requests.post(self.__token_url, data=data)
             self.__access_token = res.json()["access_token"]
             self.__bike = self.get("bike")
 
